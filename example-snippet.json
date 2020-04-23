@@ -1,0 +1,12 @@
+{
+    "Create Azure Resource Group Block": {
+        "prefix": "rg",
+        "body": [
+            "resource \"azurerm_resource_group\" \"${1:block label}\" {",
+            "\tname     = \"${2:name}\"",
+            "\tlocation = \"${3:region}\"",
+            "}"
+         ],
+         "description": "Creates a Terraform Azure Resource Group block"
+     }
+}

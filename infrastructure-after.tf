@@ -4,29 +4,29 @@ variable "prefix" {
   default = "tfvmex"
 }
 
-resource "azurerm_resource_group" "main" {
+resource "azurerm_resource_group" "project" {
   name     = "${var.prefix}-resources"
   location = "West US 2"
 }
 
-resource "azurerm_virtual_network" "main" {
+resource "azurerm_virtual_network" "project" {
   name                = "${var.prefix}-network"
   address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.project.location
+  resource_group_name = azurerm_resource_group.project.name
 }
 
 resource "azurerm_subnet" "internal" {
   name                 = "internal"
-  resource_group_name  = azurerm_resource_group.main.name
-  virtual_network_name = azurerm_virtual_network.main.name
+  resource_group_name  = azurerm_resource_group.project.name
+  virtual_network_name = azurerm_virtual_network.project.name
   address_prefix       = "10.0.2.0/24"
 }
 
-resource "azurerm_network_interface" "main" {
+resource "azurerm_network_interface" "project" {
   name                = "${var.prefix}-nic"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.project.location
+  resource_group_name = azurerm_resource_group.project.name
 
   ip_configuration {
     name                          = "testconfiguration1"
@@ -35,11 +35,11 @@ resource "azurerm_network_interface" "main" {
   }
 }
 
-resource "azurerm_virtual_machine" "main" {
+resource "azurerm_virtual_machine" "project" {
   name                  = "${var.prefix}-vm"
-  location              = azurerm_resource_group.main.location
-  resource_group_name   = azurerm_resource_group.main.name
-  network_interface_ids = [azurerm_network_interface.main.id]
+  location              = azurerm_resource_group.project.location
+  resource_group_name   = azurerm_resource_group.project.name
+  network_interface_ids = [azurerm_network_interface.project.id]
   vm_size               = "Standard_DS1_v2"
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM

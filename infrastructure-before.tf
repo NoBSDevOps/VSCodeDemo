@@ -71,4 +71,7 @@ resource "azurerm_virtual_machine" "main" {
   tags = {
     environment = "staging"
   }
+}resource "azurerm_resource_group" "＄{1:block label}" {
+  name     = "＄{2:name}"
+  location = "＄{3:region}"
 }
